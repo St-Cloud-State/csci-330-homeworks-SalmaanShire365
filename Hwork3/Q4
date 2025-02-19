@@ -1,0 +1,44 @@
+Script started on 2025-02-18 23:23:40-06:00 [TERM="xterm-256color" TTY="/dev/tty1" COLUMNS="117" LINES="66"]
+[?2004h]0;shire@Shire: ~/Prog/csci-330-homeworks-SalmaanShire365/Hwork3[01;32mshire@Shire[00m:[01;34m~/Prog/csci-330-homeworks-SalmaanShire365/Hwork3[00m$ cat Question4.lsp 
+[?2004l
+
+(defun insert-into-sorted (item sorted-list)
+  "Insert an item into a sorted list in acending order"
+  
+  (cond 
+    ((null sorted-list) (list item)) ; If list is empty, return item as the new list
+    ((<= item (car sorted-list)) (cons item sorted-list)) ; Insert at head of list if item is less than or equal
+    (t (cons (car sorted-list) (insert-into-sorted item (cdr sorted-list))))))
+    ; Otherwise, recursively call until unsorted list is empty
+
+
+(defun insertion-sort (unsorted-list)
+  "Sort a list using insertion sort."
+  (if (null unsorted-list)
+    nil ;Base caseL empty list is already sorted
+      (insert-into-sorted (car unsorted-list) (insertion-sort (cdr unsorted-list)))))
+
+
+[?2004h]0;shire@Shire: ~/Prog/csci-330-homeworks-SalmaanShire365/Hwork3[01;32mshire@Shire[00m:[01;34m~/Prog/csci-330-homeworks-SalmaanShire365/Hwork3[00m$ ls [K[K[Kl[Ksbcl
+[?2004lThis is SBCL 2.1.11.debian, an implementation of ANSI Common Lisp.
+More information about SBCL is available at <http://www.sbcl.org/>.
+
+SBCL is free software, provided as is, with absolutely no warranty.
+It is mostly in the public domain; some portions are provided under
+BSD-style licenses.  See the CREDITS and COPYING files in the
+distribution for more information.
+* (load "Wu  Qurs  estion4.lsp: ")
+T
+* (insertion-sort '(4 3 1 5 2)) ; Returns (1 2 3 4 5)
+(1 2 3 4 5)
+* (insertion-sort '(1 2 3 4 5))
+(1 2 3 4 5)
+* (insertion-sort '(3 1 2 1 4 3 2))
+(1 1 2 2 3 3 4)
+* (insertion-sort '())
+NIL
+* (qi uit)
+[?2004h]0;shire@Shire: ~/Prog/csci-330-homeworks-SalmaanShire365/Hwork3[01;32mshire@Shire[00m:[01;34m~/Prog/csci-330-homeworks-SalmaanShire365/Hwork3[00m$ ls[K[K[?2004l
+exit
+
+Script done on 2025-02-18 23:25:13-06:00 [COMMAND_EXIT_CODE="0"]

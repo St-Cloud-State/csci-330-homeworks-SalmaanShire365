@@ -1,0 +1,61 @@
+Script started on 2025-02-18 23:20:31-06:00 [TERM="xterm-256color" TTY="/dev/tty1" COLUMNS="117" LINES="66"]
+[?2004h]0;shire@Shire: ~/Prog/csci-330-homeworks-SalmaanShire365/Hwork3[01;32mshire@Shire[00m:[01;34m~/Prog/csci-330-homeworks-SalmaanShire365/Hwork3[00m$ sc[K[Ksbcl
+[?2004lThis is SBCL 2.1.11.debian, an implementation of ANSI Common Lisp.
+More information about SBCL is available at <http://www.sbcl.org/>.
+
+SBCL is free software, provided as is, with absolutely no warranty.
+It is mostly in the public domain; some portions are provided under
+BSD-style licenses.  See the CREDITS and COPYING files in the
+distribution for more information.
+* (load "Question2.lsp")
+T
+* (mergesort '(5 3 8 3 9 1 5 2 3 6)))
+(1 2 3 3 3 5 5 6 8 9)
+* 
+debugger invoked on a SB-INT:SIMPLE-READER-ERROR in thread
+#<THREAD "main thread" RUNNING {1001834103}>:
+  unmatched close parenthesis
+
+    Stream: #<SYNONYM-STREAM :SYMBOL SB-SYS:*STDIN* {100001B513}>
+
+Type HELP for debugger help, or (SB-EXT:EXIT) to exit from SBCL.
+
+restarts (invokable by number or by possibly-abbreviated name):
+  0: [ABORT] Exit debugger, returning to top level.
+
+(SB-IMPL::READ-RIGHT-PAREN #<SYNONYM-STREAM :SYMBOL SB-SYS:*STDIN* {100001B513}> #<unused argument>)
+0] (mergesort '(5 3 8 3 9 1 5 2 3 6)))^[[D     
+
+(1 2 3 3 3 5 5 6 8 9)
+0] (quit)
+[?2004h]0;shire@Shire: ~/Prog/csci-330-homeworks-SalmaanShire365/Hwork3[01;32mshire@Shire[00m:[01;34m~/Prog/csci-330-homeworks-SalmaanShire365/Hwork3[00m$ car[Kt Question2.lsp 
+[?2004l(defun makeEqual (unprocessed l1 l2)
+  (cond ((null unprocessed) (list l1 l2)) ; Base case: if no items left, return two lists
+	((null (cdr unprocessed)) (list (cons (car unprocessed) l1) l2)) ; Only one item left, put in list 2
+	(t (makeEqual (cdr (cdr unprocessed)) ; Recursively call to process to items
+		      (cons (car unprocessed) l1) ; Add first item to list 1
+		      (cons (car (cdr unprocessed)) l2))))) ; Add second item to list 2
+
+
+(defun mergeLists (list1 list2) 
+  "Merge two sorted lists int one sorted list."
+  (cond 
+    ((null list1) list2) ; If list1 is empty, return list2
+    ((null list2) list1) ; If list2 is empty, return list1
+    ((< (car list1) (car list2)) ; if first element of list1 is smaller
+     (cons (car list1) (mergeLists (cdr list1) list2))) ; Place the first element of list1 in result
+   (t (cons (car list2) (mergeLists list1 (cdr list2)))))) ; Else place car of list2 in the result
+
+(defun mergesort (lst)
+  "Sort a list using mergesort algorithm recursively"
+  (if (or (null lst) (null (cdr lst))) ; if the list is empty or has at least one element, return as is
+   	lst
+	
+    (let* ((half (makeEqual lst '() '()))); Split the lsit into two halves
+	   (let ((left (car half)) ; First half
+	   (right (car (cdr half)))) ;Second half
+      (mergeLists (mergesort left) (mergesort right)))))); Recursively sort each half and merge
+[?2004h]0;shire@Shire: ~/Prog/csci-330-homeworks-SalmaanShire365/Hwork3[01;32mshire@Shire[00m:[01;34m~/Prog/csci-330-homeworks-SalmaanShire365/Hwork3[00m$ [?2004l
+exit
+
+Script done on 2025-02-18 23:21:49-06:00 [COMMAND_EXIT_CODE="0"]
