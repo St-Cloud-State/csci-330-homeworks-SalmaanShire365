@@ -1,0 +1,70 @@
+Script started on 2025-02-18 23:21:56-06:00 [TERM="xterm-256color" TTY="/dev/tty1" COLUMNS="117" LINES="66"]
+[?2004h]0;shire@Shire: ~/Prog/csci-330-homeworks-SalmaanShire365/Hwork3[01;32mshire@Shire[00m:[01;34m~/Prog/csci-330-homeworks-SalmaanShire365/Hwork3[00m$ ls
+[?2004lQ1  Q2  Q3  Question2.lsp  Question3.lsp  Question4.lsp  Quicksort.cpp
+[?2004h]0;shire@Shire: ~/Prog/csci-330-homeworks-SalmaanShire365/Hwork3[01;32mshire@Shire[00m:[01;34m~/Prog/csci-330-homeworks-SalmaanShire365/Hwork3[00m$ sbcl Q[K
+[?2004lThis is SBCL 2.1.11.debian, an implementation of ANSI Common Lisp.
+More information about SBCL is available at <http://www.sbcl.org/>.
+
+SBCL is free software, provided as is, with absolutely no warranty.
+It is mostly in the public domain; some portions are provided under
+BSD-style licenses.  See the CREDITS and COPYING files in the
+distribution for more information.
+* (load :  "  "Question3.lsp")
+T
+* (bottom-up-mergesort '(5 3 8 3 9 1 5 2 3 6))
+((1 2 3 3 3 5 5 6 8 9))
+* (bottom-up-mergesort '(4 1 6 3 8 5 7 2))
+((1 2 3 4 5 6 7 8))
+* (quit)
+[?2004h]0;shire@Shire: ~/Prog/csci-330-homeworks-SalmaanShire365/Hwork3[01;32mshire@Shire[00m:[01;34m~/Prog/csci-330-homeworks-SalmaanShire365/Hwork3[00m$ cat Question3.lsp 
+[?2004l
+(defun make-pairs (lst)
+  "Create sorted pairs from list"
+  (cond
+    
+    ((null lst) '()) ; If list1 is empty , return list2
+
+    ((null (cdr lst)) (list (list (car lst)))) ; At least one element, make a list of it
+    
+    (t 
+      (cons (list (min (car lst) (cadr lst)) (max (car lst) (cadr lst))) ; Make a sorted pair and recursively process the list 
+	     (make-pairs (cddr lst))))))
+
+
+
+(defun mergeLists (list1 list2)
+    "Merges two sorted lists into one sorted list."
+      (cond
+	    ((null list1) list2)  ; If list1 is empty, return list2
+	        ((null list2) list1)  ; If list2 is empty, return list1
+		    ((<= (car list1) (car list2))  ; If the first element of list1 is smaller than or equal to the first element of list2
+		          (cons (car list1) (mergeLists (cdr list1) list2)))  ; Recursively merge the rest of list1 with list2
+		        (t  ; Otherwise, if the first element of list2 is smaller
+			       (cons (car list2) (mergeLists list1 (cdr list2))))))  ; Recursively merge list1 with the rest of list2
+
+
+
+
+(defun merge-pairs-help (lst)
+; Helper function for adjacent pairs
+  (cond 
+    ((null lst) '()) ; If list is empty, return an empty list
+    ((null (cdr lst)) lst) ; If only 1 list remains, return it
+    (t (cons (mergeLists (car lst) (cadr lst)) ; Merge the first 2 pairs and recursively process the rest
+	      (merge-pairs-help (cddr lst))))))
+
+(defun merge-pairs (lst)
+  ; Merge pairs 
+  (cond
+    ((null lst) '()) 
+    ((null (cdr lst)) lst)
+    (t (merge-pairs (merge-pairs-help lst)))))
+
+
+(defun bottom-up-mergesort (lst)
+  "bottom up mergesort calling merge pairs and make-pairs on the lst"
+  (merge-pairs (make-pairs lst)))
+[?2004h]0;shire@Shire: ~/Prog/csci-330-homeworks-SalmaanShire365/Hwork3[01;32mshire@Shire[00m:[01;34m~/Prog/csci-330-homeworks-SalmaanShire365/Hwork3[00m$ l[K[?2004l
+exit
+
+Script done on 2025-02-18 23:23:05-06:00 [COMMAND_EXIT_CODE="0"]
