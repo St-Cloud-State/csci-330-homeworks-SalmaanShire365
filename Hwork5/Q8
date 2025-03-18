@@ -1,0 +1,502 @@
+Script started on 2025-03-18 01:35:53+00:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="99" LINES="6"]
+[0;32m@SalmaanShire365 [0m➜ [1;34m/workspaces/csci-330-homeworks-SalmaanShire365/Hwork5 [0;36m([1;31mmain[0;36m) [0m$ [K[0;32m@SalmaanShire365 [0m➜ [1;34m/workspaces/csci-330-homeworks-SalmaanShire365/Hwork5 [0;36m([1;31mmain[0;36m) [0m$ [K[0;32m@SalmaanShire365 [0m➜ [1;34m/workspaces/csci-330-homeworks-SalmaanShire365/Hwork5 [0;36m([1;31mmain[0;36m) [0m$ [K[0;32m@SalmaanShire365 [0m➜ [1;34m/workspaces/csci-330-homeworks-SalmaanShire365/Hwork5 [0;36m([1;31mmain[0;36m) [0m$ [K[0;32m@SalmaanShire365 [0m➜ [1;34m/workspaces/csci-330-homeworks-SalmaanShire365/Hwork5 [0;36m([1;31mmain[0;36m) [0m$ [K[0;32m@SalmaanShire365 [0m➜ [1;34m/workspaces/csci-330-homeworks-SalmaanShire365/Hwork5 [0;36m([1;31mmain[0;36m) [0m$ [K[0;32m@SalmaanShire365 [0m➜ [1;34m/workspaces/csci-330-homeworks-SalmaanShire365/Hwork5 [0;36m([1;31mmain[0;36m) [0m$ [K[0;32m@SalmaanShire365 [0m➜ [1;34m/workspaces/csci-330-homeworks-SalmaanShire365/Hwork5 [0;36m([1;31mmain[0;36m) [0m$ [K[0;32m@SalmaanShire365 [0m➜ [1;34m/workspaces/csci-330-homeworks-SalmaanShire365/Hwork5 [0;36m([1;31mmain[0;36m) [0m$ [K[0;32m@SalmaanShire365 [0m➜ [1;34m/workspaces/csci-330-homeworks-SalmaanShire365/Hwork5 [0;36m([1;31mmain[0;36m) [0m$ [K[0;32m@SalmaanShire365 [0m➜ [1;34m/workspaces/csci-330-homeworks-SalmaanShire365/Hwork5 [0;36m([1;31mmain[0;36m) [0m$ [K[0;32m@SalmaanShire365 [0m➜ [1;34m/workspaces/csci-330-homeworks-SalmaanShire365/Hwork5 [0;36m([1;31mmain[0;36m) [0m$ cat Q*[K8.lisp 
+(defun Ifn (list &optional (position 0))
+  (print '(in Ifn)) 
+  (print list)
+  (cond ((eql (car list) 'i) (IPfn (Sfn (Efn (cdr list) (1+ position))) (1+ position)))
+        (t (format t "Unexpected symbol at position ~A in Ifn: ~A~%" position (car list)))))
+
+(defun IPfn (list &optional (position 0))
+  (print '(in IPfn)) 
+  (print list)
+  (cond 
+    ((null list) list)  
+    ((eql (car list) 'e) (Sfn (cdr list) (1+ position)))
+    (t (format t "Unexpected symbol at position ~A in IPfn: ~A~%" position (car list)))))
+
+(defun Efn (list &optional (position 0))
+  (print '(in Efn)) 
+  (print list)
+  (EPfn (Gfn list position) position))
+
+(defun EPfn (list &optional (position 0))
+  (print '(in EPfn)) 
+  (print list)
+  (cond 
+    ((eql (car list) 'o) (Efn (cdr list) (1+ position)))
+    ((null list) (format t "Unexpected end of list at position ~A in EPfn~%" position)) ; handle empty list case
+    (t (format t "Unexpected symbol at position ~A in EPfn: ~A~%" position (car list)))))
+
+(defun Gfn (list &optional (position 0))
+  (print '(in Gfn)) 
+  (print list)
+  (cond 
+    ((or (eql (car list) 'x) 
+         (eql (car list) 'y) 
+         (eql (car list) 'z) 
+         (eql (car list) 'w)) 
+     (cdr list))
+    ((null list) (format t "Unexpected end of list at position ~A in Gfn~%" position)) ; handle empty list case
+    (t (format t "Unexpected symbol at position ~A in Gfn: ~A~%" position (car list)))))
+
+(defun Sfn (list &optional (position 0))
+  (print '(in Sfn)) 
+  (print list)
+  (cond 
+    ((eql (car list) 's) (cdr list))  
+    ((eql (car list) 'd)  
+     (let ((x (Lfn (cdr list) (1+ position))))  
+       (cond 
+         ((null x) (append (cdr list) (list 'err)))  
+         ((eql (car x) 'b) (cdr x))  
+         (t (append (cdr list) (list 'err))))))  
+    ((null list) (format t "Unexpected end of list at position ~A in Sfn~%" position)) ; handle empty list case
+    (t (format t "Unexpected symbol at position ~A in Sfn: ~A~%" position (car list)))))
+
+(defun Lfn (list &optional (position 0))
+  (print '(in Lfn)) 
+  (print list)
+  (cond 
+    ((eql (car list) 's) (LPfn (cdr list) (1+ position)))  
+    ((null list) (format t "Unexpected end of list at position ~A in Lfn~%" position)) ; handle empty list case
+    (t (format t "Unexpected symbol at position ~A in Lfn: ~A~%" position (car list)))))
+
+(defun LPfn (list &optional (position 0))
+  (print '(in LPfn)) 
+  (print list)
+  (cond 
+    ((eql (car list) 's) (Lfn (cdr list) (1+ position)))  ; Recursive call to Lfn
+    ((null list) (format t "Unexpected end of list at position ~A in LPfn~%" position)) ; handle empty list case
+    (t (format t "Unexpected symbol at position ~A in LPfn: ~A~%" position (car list)))))
+
+(defun run-tests ()
+  (let ((valid-tests '(
+                        (i x o y o w)
+                        (i x o y s)
+                        (i x d s s b)
+                        (i e o x o y w d s s b e s)
+                        (i x o y o s d s b s)
+                        (i e o x o y w s d s b s)
+                        (i x o y o w d s s b e s)
+                        ))
+        (invalid-tests '(
+                          (i x o y b)
+                          (i e o x z o w)
+                          (i x o y o s s d)
+                          (i x o d w s)
+                          (i e o y w s b s)
+                          (i x o y o s s d s b)
+                          (i x o y o w d s s d s b)
+                          )))
+    (format t "Running Valid Tests:~%")
+    (dolist (test valid-tests)
+      (format t "Testing valid: ~A~%" test)
+      (Ifn test)) 
+    
+    (format t "~%Running Invalid Tests:~%")
+    (dolist (test invalid-tests)
+      (format t "Testing invalid: ~A~%" test)
+      (Ifn test))))
+[0;32m@SalmaanShire365 [0m➜ [1;34m/workspaces/csci-330-homeworks-SalmaanShire365/Hwork5 [0;36m([1;31mmain[0;36m) [0m$ c[Ki[Kcat Q8.lisp sbcl --load "Q6-7.lisp"[K[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[K[K[K[K[K[K8.lisp" [A
+This is SBCL 1.4.3, an implementation of ANSI Common Lisp.
+More information about SBCL is available at <http://www.sbcl.org/>.
+
+SBCL is free software, provided as is, with absolutely no warranty.
+It is mostly in the public domain; some portions are provided under
+BSD-style licenses.  See the CREDITS and COPYING files in the
+distribution for more information.
+
+; file: /workspaces/csci-330-homeworks-SalmaanShire365/Hwork5/Q8.lisp
+; in: DEFUN IFN
+;     (EFN (CDR LIST) (1+ POSITION))
+; 
+; caught STYLE-WARNING:
+;   undefined function: EFN
+
+;     (IPFN (SFN (EFN (CDR LIST) (1+ POSITION))) (1+ POSITION))
+; 
+; caught STYLE-WARNING:
+;   undefined function: IPFN
+
+;     (SFN (EFN (CDR LIST) (1+ POSITION)))
+; 
+; caught STYLE-WARNING:
+;   undefined function: SFN
+; 
+; compilation unit finished
+;   Undefined functions:
+;     EFN IPFN SFN
+;   caught 3 STYLE-WARNING conditions
+
+; file: /workspaces/csci-330-homeworks-SalmaanShire365/Hwork5/Q8.lisp
+; in: DEFUN IPFN
+;     (SFN (CDR LIST) (1+ POSITION))
+; 
+; caught STYLE-WARNING:
+;   undefined function: SFN
+; 
+; compilation unit finished
+;   Undefined function:
+;     SFN
+;   caught 1 STYLE-WARNING condition
+
+; file: /workspaces/csci-330-homeworks-SalmaanShire365/Hwork5/Q8.lisp
+; in: DEFUN EFN
+;     (EPFN (GFN LIST POSITION) POSITION)
+; 
+; caught STYLE-WARNING:
+;   undefined function: EPFN
+
+;     (GFN LIST POSITION)
+; 
+; caught STYLE-WARNING:
+;   undefined function: GFN
+; 
+; compilation unit finished
+;   Undefined functions:
+;     EPFN GFN
+;   caught 2 STYLE-WARNING conditions
+
+; file: /workspaces/csci-330-homeworks-SalmaanShire365/Hwork5/Q8.lisp
+; in: DEFUN SFN
+;     (LFN (CDR LIST) (1+ POSITION))
+; 
+; caught STYLE-WARNING:
+;   undefined function: LFN
+; 
+; compilation unit finished
+;   Undefined function:
+;     LFN
+;   caught 1 STYLE-WARNING condition
+
+; file: /workspaces/csci-330-homeworks-SalmaanShire365/Hwork5/Q8.lisp
+; in: DEFUN LFN
+;     (LPFN (CDR LIST) (1+ POSITION))
+; 
+; caught STYLE-WARNING:
+;   undefined function: LPFN
+; 
+; compilation unit finished
+;   Undefined function:
+;     LPFN
+;   caught 1 STYLE-WARNING condition
+* (run-tests)
+Running Valid Tests:
+Testing valid: (I X O Y O W)
+
+(IN IFN) 
+(I X O Y O W) 
+(IN EFN) 
+(X O Y O W) 
+(IN GFN) 
+(X O Y O W) 
+(IN EPFN) 
+(O Y O W) 
+(IN EFN) 
+(Y O W) 
+(IN GFN) 
+(Y O W) 
+(IN EPFN) 
+(O W) 
+(IN EFN) 
+(W) 
+(IN GFN) 
+(W) 
+(IN EPFN) 
+NIL Unexpected end of list at position 3 in EPfn
+
+(IN SFN) 
+NIL Unexpected end of list at position 0 in Sfn
+
+(IN IPFN) 
+NIL Testing valid: (I X O Y S)
+
+(IN IFN) 
+(I X O Y S) 
+(IN EFN) 
+(X O Y S) 
+(IN GFN) 
+(X O Y S) 
+(IN EPFN) 
+(O Y S) 
+(IN EFN) 
+(Y S) 
+(IN GFN) 
+(Y S) 
+(IN EPFN) 
+(S) Unexpected symbol at position 2 in EPfn: S
+
+(IN SFN) 
+NIL Unexpected end of list at position 0 in Sfn
+
+(IN IPFN) 
+NIL Testing valid: (I X D S S B)
+
+(IN IFN) 
+(I X D S S B) 
+(IN EFN) 
+(X D S S B) 
+(IN GFN) 
+(X D S S B) 
+(IN EPFN) 
+(D S S B) Unexpected symbol at position 1 in EPfn: D
+
+(IN SFN) 
+NIL Unexpected end of list at position 0 in Sfn
+
+(IN IPFN) 
+NIL Testing valid: (I E O X O Y W D S S B E S)
+
+(IN IFN) 
+(I E O X O Y W D S S B E S) 
+(IN EFN) 
+(E O X O Y W D S S B E S) 
+(IN GFN) 
+(E O X O Y W D S S B E S) Unexpected symbol at position 1 in Gfn: E
+
+(IN EPFN) 
+NIL Unexpected end of list at position 1 in EPfn
+
+(IN SFN) 
+NIL Unexpected end of list at position 0 in Sfn
+
+(IN IPFN) 
+NIL Testing valid: (I X O Y O S D S B S)
+
+(IN IFN) 
+(I X O Y O S D S B S) 
+(IN EFN) 
+(X O Y O S D S B S) 
+(IN GFN) 
+(X O Y O S D S B S) 
+(IN EPFN) 
+(O Y O S D S B S) 
+(IN EFN) 
+(Y O S D S B S) 
+(IN GFN) 
+(Y O S D S B S) 
+(IN EPFN) 
+(O S D S B S) 
+(IN EFN) 
+(S D S B S) 
+(IN GFN) 
+(S D S B S) Unexpected symbol at position 3 in Gfn: S
+
+(IN EPFN) 
+NIL Unexpected end of list at position 3 in EPfn
+
+(IN SFN) 
+NIL Unexpected end of list at position 0 in Sfn
+
+(IN IPFN) 
+NIL Testing valid: (I E O X O Y W S D S B S)
+
+(IN IFN) 
+(I E O X O Y W S D S B S) 
+(IN EFN) 
+(E O X O Y W S D S B S) 
+(IN GFN) 
+(E O X O Y W S D S B S) Unexpected symbol at position 1 in Gfn: E
+
+(IN EPFN) 
+NIL Unexpected end of list at position 1 in EPfn
+
+(IN SFN) 
+NIL Unexpected end of list at position 0 in Sfn
+
+(IN IPFN) 
+NIL Testing valid: (I X O Y O W D S S B E S)
+
+(IN IFN) 
+(I X O Y O W D S S B E S) 
+(IN EFN) 
+(X O Y O W D S S B E S) 
+(IN GFN) 
+(X O Y O W D S S B E S) 
+(IN EPFN) 
+(O Y O W D S S B E S) 
+(IN EFN) 
+(Y O W D S S B E S) 
+(IN GFN) 
+(Y O W D S S B E S) 
+(IN EPFN) 
+(O W D S S B E S) 
+(IN EFN) 
+(W D S S B E S) 
+(IN GFN) 
+(W D S S B E S) 
+(IN EPFN) 
+(D S S B E S) Unexpected symbol at position 3 in EPfn: D
+
+(IN SFN) 
+NIL Unexpected end of list at position 0 in Sfn
+
+(IN IPFN) 
+NIL 
+Running Invalid Tests:
+Testing invalid: (I X O Y B)
+
+(IN IFN) 
+(I X O Y B) 
+(IN EFN) 
+(X O Y B) 
+(IN GFN) 
+(X O Y B) 
+(IN EPFN) 
+(O Y B) 
+(IN EFN) 
+(Y B) 
+(IN GFN) 
+(Y B) 
+(IN EPFN) 
+(B) Unexpected symbol at position 2 in EPfn: B
+
+(IN SFN) 
+NIL Unexpected end of list at position 0 in Sfn
+
+(IN IPFN) 
+NIL Testing invalid: (I E O X Z O W)
+
+(IN IFN) 
+(I E O X Z O W) 
+(IN EFN) 
+(E O X Z O W) 
+(IN GFN) 
+(E O X Z O W) Unexpected symbol at position 1 in Gfn: E
+
+(IN EPFN) 
+NIL Unexpected end of list at position 1 in EPfn
+
+(IN SFN) 
+NIL Unexpected end of list at position 0 in Sfn
+
+(IN IPFN) 
+NIL Testing invalid: (I X O Y O S S D)
+
+(IN IFN) 
+(I X O Y O S S D) 
+(IN EFN) 
+(X O Y O S S D) 
+(IN GFN) 
+(X O Y O S S D) 
+(IN EPFN) 
+(O Y O S S D) 
+(IN EFN) 
+(Y O S S D) 
+(IN GFN) 
+(Y O S S D) 
+(IN EPFN) 
+(O S S D) 
+(IN EFN) 
+(S S D) 
+(IN GFN) 
+(S S D) Unexpected symbol at position 3 in Gfn: S
+
+(IN EPFN) 
+NIL Unexpected end of list at position 3 in EPfn
+
+(IN SFN) 
+NIL Unexpected end of list at position 0 in Sfn
+
+(IN IPFN) 
+NIL Testing invalid: (I X O D W S)
+
+(IN IFN) 
+(I X O D W S) 
+(IN EFN) 
+(X O D W S) 
+(IN GFN) 
+(X O D W S) 
+(IN EPFN) 
+(O D W S) 
+(IN EFN) 
+(D W S) 
+(IN GFN) 
+(D W S) Unexpected symbol at position 2 in Gfn: D
+
+(IN EPFN) 
+NIL Unexpected end of list at position 2 in EPfn
+
+(IN SFN) 
+NIL Unexpected end of list at position 0 in Sfn
+
+(IN IPFN) 
+NIL Testing invalid: (I E O Y W S B S)
+
+(IN IFN) 
+(I E O Y W S B S) 
+(IN EFN) 
+(E O Y W S B S) 
+(IN GFN) 
+(E O Y W S B S) Unexpected symbol at position 1 in Gfn: E
+
+(IN EPFN) 
+NIL Unexpected end of list at position 1 in EPfn
+
+(IN SFN) 
+NIL Unexpected end of list at position 0 in Sfn
+
+(IN IPFN) 
+NIL Testing invalid: (I X O Y O S S D S B)
+
+(IN IFN) 
+(I X O Y O S S D S B) 
+(IN EFN) 
+(X O Y O S S D S B) 
+(IN GFN) 
+(X O Y O S S D S B) 
+(IN EPFN) 
+(O Y O S S D S B) 
+(IN EFN) 
+(Y O S S D S B) 
+(IN GFN) 
+(Y O S S D S B) 
+(IN EPFN) 
+(O S S D S B) 
+(IN EFN) 
+(S S D S B) 
+(IN GFN) 
+(S S D S B) Unexpected symbol at position 3 in Gfn: S
+
+(IN EPFN) 
+NIL Unexpected end of list at position 3 in EPfn
+
+(IN SFN) 
+NIL Unexpected end of list at position 0 in Sfn
+
+(IN IPFN) 
+NIL Testing invalid: (I X O Y O W D S S D S B)
+
+(IN IFN) 
+(I X O Y O W D S S D S B) 
+(IN EFN) 
+(X O Y O W D S S D S B) 
+(IN GFN) 
+(X O Y O W D S S D S B) 
+(IN EPFN) 
+(O Y O W D S S D S B) 
+(IN EFN) 
+(Y O W D S S D S B) 
+(IN GFN) 
+(Y O W D S S D S B) 
+(IN EPFN) 
+(O W D S S D S B) 
+(IN EFN) 
+(W D S S D S B) 
+(IN GFN) 
+(W D S S D S B) 
+(IN EPFN) 
+(D S S D S B) Unexpected symbol at position 3 in EPfn: D
+
+(IN SFN) 
+NIL Unexpected end of list at position 0 in Sfn
+
+(IN IPFN) 
+NIL 
+NIL
+* (quit)
+[0;32m@SalmaanShire365 [0m➜ [1;34m/workspaces/csci-330-homeworks-SalmaanShire365/Hwork5 [0;36m([1;31mmain[0;36m) [0m$ clear
+[H[2J[3J[0;32m@SalmaanShire365 [0m➜ [1;34m/workspaces/csci-330-homeworks-SalmaanShire365/Hwork5 [0;36m([1;31mmain[0;36m) [0m$ exit
+
+Script done on 2025-03-18 01:36:40+00:00 [COMMAND_EXIT_CODE="0"]
